@@ -289,128 +289,68 @@ if the result of rand-vu-int-range is 1, then DANCE! if it is not 1, then Don't 
   )
 )
 
-;;This turns on play hints
-(defun turnonplayhints ()
-(set! (-> *setting-control* default play-hints) #t)
-)
-
-;;This turns off playhints
-(defun turnoffplayhints()
-(set! (-> *setting-control* default play-hints) #f)
-)
-
-;;This turns on collision render when called
-(defun turnonCollisionmode()
-  (set! *collision-renderer* #t)
-  (logclear! *vu1-enable-user-menu* (vu1-renderer-mask tfrag trans-tfrag tie tie-near))
-)
-
-;;This turns off collision render when called
-(defun turnoffCollisionmode()
-  (set! *collision-renderer* #f)
-  (logior! *vu1-enable-user-menu* (vu1-renderer-mask tfrag trans-tfrag tie tie-near))
-)
-
-;;This makes it thunder in the current level
-(defun thunderTime()
-  (set! (-> (level-get-target-inside *level*) mood-func)update-mood-village2)
-  (set! (-> (level-get-target-inside *level*) mood) *village2-mood*)
-)
-
-;;This makes the current level dark when called
-(defun DarkesetGlitchTime()
-  (set! (-> (level-get-target-inside *level*) mood-func)update-mood-finalboss )
-  (set! (-> (level-get-target-inside *level*) mood) *finalboss-mood*)
-)
-
-;;This needs fixed
-(defun rainyTime()
-  (set! (-> (level-get-target-inside *level*) mood-func)update-mood-swamp)
-  (set! (-> (level-get-target-inside *level*) mood) *swamp-mood*)
-)
-
-;;This needs fixed
-(defun snowingTime()
-  (set! (-> (level-get-target-inside *level*) mood-func)update-mood-snow)
-  (set! (-> (level-get-target-inside *level*) mood) *snow-mood*)
-)
-
-;;This makes the current levels weather the same as village1
-(defun defaultWeatherTime()
-  (set! (-> (level-get-target-inside *level*) mood-func)update-mood-village1)
-  (set! (-> (level-get-target-inside *level*) mood) *village1-mood*)
-)
-
-;;This moves jak to a provided coordinate example call
-;;(tp-jak 0.0 12.0 32.32)
-(defun tp-jak ((arg0 float)(arg1 float)(arg2 float))
-  (set! (-> (target-pos 0) x) (meters arg0))
-  (set! (-> (target-pos 0) y) (meters arg1))
-  (set! (-> (target-pos 0) z) (meters arg2))
-)
-
-;;This returns true or false depending on if jak is within a provided distance from an actor
-(defun close? ((actor-ename string) (dist float))
-  (and 
-    (process-by-ename actor-ename)
-    (<= 
-      (vector-vector-distance 
-        (target-pos 0) 
-        (-> (the process-drawable (process-by-ename actor-ename)) root trans)
-        )
-      dist
-      )
+  ;; prints the position (root trans) of a process-drawable
+(defmacro pd-pos-m (procname)
+  `(let* ((obj (the process-drawable (process-by-ename ,procname)))
+          (vec (-> obj root trans)))
+    (format 0 "~m ~m ~m~%" (-> vec x) (-> vec y) (-> vec z) 4096.0)
+    (none)
     )
   )
 
+    
+    ;;)
+  ;;)
 
-;;This returns true or false if jak is within a bubble defined by coordiantes and width
-(defun in-bubble? ((x float) (y float) (z float) (w float))
-  (<= 
-    (vector-vector-distance 
-      (target-pos 0) 
-      (set-vector! (new-stack-vector0) x y z 1.0)
-      )
-    (/ w 2.0)
-    )
-  )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Jak Color functions
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun draw-xyz ((jak target) (x float) (y float) (z float))
-  (set! (-> jak draw color-mult x) x)
-  (set! (-> jak draw color-mult y) y)
-  (set! (-> jak draw color-mult z) z)
+(defun override-money-position-training ()
+  (move-actor "money-4391" -1319.7 21.5 1076.4)
+  (move-actor "money-4393" -1322.0 53.0 1091.0)   
+  (move-actor "money-4395" -1164.0 62.5 1031.0)
+  (move-actor "money-4396" -1242.0 5.5 1018.0)    
+  (move-actor "money-4397" -1088.0 -8.0 995.0)   
+  (move-actor "money-4399" -1177.0 6.0 905.0)  
+  (move-actor "money-4401" -1187.0 36.5 869.0)  
+  (move-actor "money-4402" -1274.0 11.0 868.0)
+  (move-actor "money-4403" -1340.0 34.5 843.0)
+  (move-actor "money-4404" -1299.0 -8.0 945.0)
+  (move-actor "money-4405" -1126.0 49.0 989.0)
+  (move-actor "money-4406" -1170.5 15.0 839.7)
+  (move-actor "money-4407" -1209.0 55.3 912.0)
+  (move-actor "money-4345" -1290.0 25.5 858.2)
+  (move-actor "money-4347" -1241.0 8.0 951.0)
+  (move-actor "money-4349" -1316.0 -160.0 1073.0)
+  (move-actor "money-4330" -1316.0 -180.0 1073.0)
+  (move-actor "money-4331" -1316.0 -200.0 1073.0)
+  (move-actor "money-4327" -1316.0 -220.0 1073.0)
+  (move-actor "money-4326" -1204.0 34.0 946.0)
+  (move-actor "money-4328" -1188.0 34.0 887.0)
+  (move-actor "money-4332" -1206.9 20.5 884.6)
+  (move-actor "money-4333" -1318.0 46.0 1040.0)
+  (move-actor "money-4794" -1172.2 41.0 897.3)    
+  (move-actor "money-4336" -1308.6 52.5 857.2)    
+  (move-actor "money-4337" -1297.2 53.8 829.4)    
+  (move-actor "money-4338" -1395.8 -12.0 781.8)    
+  (move-actor "money-4354" -1136.6 4.6 910.4)    
+  (move-actor "money-4356" -1295.8 4.6 937.6)    
+  (move-actor "money-4358" -1309.6 7.9 990.6)    
+  (move-actor "money-4367" -1169.6 39.6 939.5)    
+  (move-actor "money-4366" -1165.7 14.4 983.9)    
+  (move-actor "money-4365" -1101.3 3.3 1065.4)    
+  (move-actor "money-4364" -1341.7 41.7 958.6)    
+  (move-actor "money-4363" -1332.9 -6.0 1063.1)   
+  (move-actor "money-4369" -946.9 4.8 934.3)   
+  (move-actor "money-4370" -1132.9 20.5 1000.8)   
+  (move-actor "money-4444" -1246.0 66.2 892.9)   
+  (move-actor "money-4443" -1267.4 19.6 985.0)   
+  (move-actor "money-4442" -1099.9 33.0 987.0)   
+  (move-actor "money-4440" -1294.1 56.9 901.5)   
+  (move-actor "money-4439" -1085.2 23.0 1002.0)   
+  (move-actor "money-4438" -1255.9 33.7 982.9)   
+  (move-actor "money-4383" -1197.9 37.8 978.6)   
+  (move-actor "money-4384" -1308.7 19.3 912.3)   
+  (move-actor "money-4381" -1331.6 26.6 1013.6)    
+  (move-actor "money-4791" -1305.5 66.5 988.2)    
+  (move-actor "money-4382" -1332.8 76.1 965.6)    
+  (move-actor "money-4793" -1293.2 41.4 996.2)    
+  (move-actor "money-4792" -1153.1 -6.0 1054.6)    
 )
-(defun draw-normal ((jak target))
-  (draw-xyz jak 1.0 1.0 1.0)
-)
-(defun draw-white ((jak target))
-  (draw-xyz jak 10.0 10.0 10.0)
-)
-(defun draw-black ((jak target))
-  (draw-xyz jak 0.0 0.0 0.0)
-)
-(defun draw-red ((jak target))
-  (draw-xyz jak 3.0 0.0 0.0)
-)
-(defun draw-green ((jak target))
-  (draw-xyz jak 0.0 3.0 0.0)
-)
-(defun draw-blue ((jak target))
-  (draw-xyz jak 0.0 0.0 3.0)
-)
-(defun draw-yellow ((jak target))
-  (draw-xyz jak 3.0 3.0 0.0)
-)
-(defun draw-pink ((jak target))
-  (draw-xyz jak 3.0 0.0 3.0)
-)
-(defun draw-light-blue ((jak target))
-  (draw-xyz jak 0.0 3.0 3.0)
-)
-
-
-
-

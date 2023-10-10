@@ -24,10 +24,25 @@
     (defun runs-every-frame ()
       ;;(increase-power-cell-by-one) This is a call to increase-power-cell-by-one defined in mod-common-functions.gc
       
-      (if *show-input-display* 
-        (input-display-on)
-        (input-display-off)
-        )
+      (override-money-position-training)
+      ;;(mod-override-init-position)
+      ;;(mod-training-run-each-frame)
+      ;;(mod-village1-run-each-frame)
+      ;;(mod-beach-run-each-frame)
+      ;;(mod-jungle-run-each-frame)
+      ;;(mod-misty-run-each-frame)
+      ;;(mod-firecanyon-run-each-frame)
+      ;;(mod-village2-run-each-frame)
+      ;;(mod-sunken-run-each-frame)
+      ;;(mod-swamp-run-each-frame)
+      ;;(mod-rolling-run-each-frame)
+      ;;(mod-ogre-run-each-frame)
+      ;;(mod-village3-run-each-frame)
+      ;;(mod-snowy-run-each-frame)
+      ;;(mod-cave-run-each-frame)
+      ;;(mod-lavatube-run-each-frame)
+      ;;(mod-citadel-run-each-frame)
+      ;;(mod-crystalcave-run-each-frame)
 
       (none)
       )
@@ -109,6 +124,8 @@
 
     (defun runs-on-jak-spawn ()
       ;; Code here runs every time jak spawns (loading a file new game or death)   
+      (set!  (-> *pc-settings* force-actors?) #t)
+      (set!  (-> *FACT-bank* suck-suck-dist) 0.0)
       (none)
       )
 
